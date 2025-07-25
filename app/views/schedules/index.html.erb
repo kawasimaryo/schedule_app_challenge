@@ -1,0 +1,32 @@
+<h1>スケジュール一覧</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>開始日</th>
+      <th>終了日</th>
+      <th>終日</th>
+      <th>メモ</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @schedules.each do |schedule| %>
+      <tr>
+        <td><%= schedule.title %></td>
+        <td><%= schedule.start_date %></td>
+        <td><%= schedule.end_date %></td>
+        <td><%= schedule.all_day ? "◯" : "×" %></td>
+        <td><%= schedule.memo %></td>
+        <td>
+          <%= link_to '詳細', schedule_path(schedule) %> |
+          <%= link_to '編集', edit_schedule_path(schedule) %> |
+          <%= link_to '削除', schedule_path(schedule), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to '新規作成', new_schedule_path %>
