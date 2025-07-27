@@ -1,12 +1,16 @@
-<h1>スケジュール詳細</h1>
+<h1 class="mb-4">スケジュール詳細</h1>
 
-<p>
-  <strong>タイトル:</strong> <%= @schedule.title %><br>
-  <strong>開始日:</strong> <%= @schedule.start_date %><br>
-  <strong>終了日:</strong> <%= @schedule.end_date %><br>
-  <strong>終日:</strong> <%= @schedule.all_day ? "◯" : "×" %><br>
-  <strong>メモ:</strong> <%= simple_format(@schedule.memo) %>
-</p>
+<div class="card mb-3">
+  <div class="card-body">
+    <p><strong>タイトル:</strong> <%= @schedule.title %></p>
+    <p><strong>開始日:</strong> <%= @schedule.start_date %></p>
+    <p><strong>終了日:</strong> <%= @schedule.end_date %></p>
+    <p><strong>終日:</strong> <%= @schedule.all_day ? "◯" : "×" %></p>
+    <p><strong>メモ:</strong><br> <%= simple_format(@schedule.memo) %></p>
+  </div>
+</div>
 
-<%= link_to '編集', edit_schedule_path(@schedule) %> |
-<%= link_to '一覧へ戻る', schedules_path %>
+<div class="d-flex gap-2">
+  <%= link_to '編集', edit_schedule_path(@schedule), class: 'btn btn-success' %>
+  <%= link_to '一覧へ戻る', schedules_path, class: 'btn btn-secondary' %>
+</div>
