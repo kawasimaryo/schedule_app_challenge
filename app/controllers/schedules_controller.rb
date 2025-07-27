@@ -2,7 +2,7 @@ class SchedulesController < ApplicationController
   before_action :set_schedule, only: [:show, :edit, :update, :destroy]
 
   def index
-    @schedules = Schedule.all
+    @schedules = Schedule.all.order(updated_at: :desc)
   end
 
   def show
@@ -15,8 +15,10 @@ class SchedulesController < ApplicationController
   def create
     @schedule = Schedule.new(schedule_params)
     if @schedule.save
-      redirect_to @schedule, notice: 'スケジュールを作成しました'
+      flash[:notice] = 'スケジュールを作成しました'
+      redirect_to @schedule
     else
+      flash.now[:alert] = 'スケジュールの作成に失敗しました'
       render :new
     end
   end
@@ -26,15 +28,18 @@ class SchedulesController < ApplicationController
 
   def update
     if @schedule.update(schedule_params)
-      redirect_to @schedule, notice: 'スケジュールを更新しました'
+      flash[:notice] = 'スケジュールを更新しました'
+      redirect_to @schedule
     else
+      flash.now[:alert] = 'スケジュールの更新に失敗しました'
       render :edit
     end
   end
 
   def destroy
     @schedule.destroy
-    redirect_to schedules_path, notice: 'スケジュールを削除しました'
+    flash[:notice] = 'スケジュールを削除しました'
+    redirect_to schedules_path
   end
 
   private

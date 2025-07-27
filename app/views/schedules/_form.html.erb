@@ -12,17 +12,26 @@
 
   <div class="mb-3">
     <%= form.label :title, 'タイトル', class: 'form-label' %>
-    <%= form.text_field :title, class: 'form-control' %>
+    <%= form.text_field :title, class: 'form-control', maxlength: 20 %>
+    <% if schedule.errors[:title].present? %>
+      <div class="text-danger small"><%= schedule.errors[:title].first %></div>
+    <% end %>
   </div>
 
   <div class="mb-3">
     <%= form.label :start_date, '開始日', class: 'form-label' %>
     <%= form.date_field :start_date, class: 'form-control' %>
+    <% if schedule.errors[:start_date].present? %>
+      <div class="text-danger small"><%= schedule.errors[:start_date].first %></div>
+    <% end %>
   </div>
 
   <div class="mb-3">
     <%= form.label :end_date, '終了日', class: 'form-label' %>
     <%= form.date_field :end_date, class: 'form-control' %>
+    <% if schedule.errors[:end_date].present? %>
+      <div class="text-danger small"><%= schedule.errors[:end_date].first %></div>
+    <% end %>
   </div>
 
   <div class="form-check mb-3">
@@ -32,7 +41,10 @@
 
   <div class="mb-3">
     <%= form.label :memo, 'メモ', class: 'form-label' %>
-    <%= form.text_area :memo, class: 'form-control', rows: 4 %>
+    <%= form.text_area :memo, class: 'form-control', rows: 4, maxlength: 500 %>
+    <% if schedule.errors[:memo].present? %>
+      <div class="text-danger small"><%= schedule.errors[:memo].first %></div>
+    <% end %>
   </div>
 
   <div class="text-center">

@@ -1,9 +1,17 @@
 <h1 class="mb-4">スケジュール一覧</h1>
 
+<!-- 予定合計数と本日日付 -->
+<div class="mb-3">
+  <p>予定の合計：<%= @schedules.count %> 件</p>
+  <p>本日の日付：<%= Time.zone.today.strftime('%Y/%m/%d') %></p>
+</div>
+
+<!-- 新規作成ボタン -->
 <div class="mb-3">
   <%= link_to '新規作成', new_schedule_path, class: 'btn btn-primary' %>
 </div>
 
+<!-- スケジュール一覧テーブル -->
 <table class="table table-striped table-bordered table-hover">
   <thead class="table-light">
     <tr>
@@ -12,6 +20,7 @@
       <th>終了日</th>
       <th>終日</th>
       <th>メモ</th>
+      <th>更新日時</th>
       <th>操作</th>
     </tr>
   </thead>
@@ -19,17 +28,43 @@
     <% @schedules.each do |schedule| %>
       <tr>
         <td><%= schedule.title %></td>
-        <td><%= schedule.start_date %></td>
-        <td><%= schedule.end_date %></td>
-        <td><%= schedule.all_day ? "◯" : "×" %></td>
+        <td><%= schedule.start_date.strftime('%Y/%m/%d') %></td>
+        <td><%= schedule.end_date.strftime('%Y/%m/%d') %></td>
+        <td><%= schedule.all_day ? "◯" : "" %></td>
         <td><%= truncate(schedule.memo, length: 30) %></td>
+        <td><%= schedule.updated_at.strftime('%Y/%m/%d %H:%M') %></td>
         <td>
           <%= link_to '詳細', schedule_path(schedule), class: "btn btn-sm btn-outline-primary me-1" %>
           <%= link_to '編集', edit_schedule_path(schedule), class: "btn btn-sm btn-outline-success me-1" %>
-          <%= link_to '削除', schedule_path(schedule),
-                      method: :delete,
-                      data: { confirm: "本当に削除しますか？" },
-                      class: "btn btn-sm btn-outline-danger" %>
+
+          <!-- ✅ 削除ボタン → モーダル起動 -->
+          <%= button_tag '削除',
+                         type: 'button',
+                         class: 'btn btn-sm btn-outline-danger',
+                         data: { bs_toggle: 'modal', bs_target: "#deleteModal#{schedule.id}" } %>
+
+          <!-- ✅ モーダル定義（各行ごと） -->
+          <div class="modal fade" id="deleteModal<%= schedule.id %>" tabindex="-1" aria-labelledby="deleteModalLabel<%= schedule.id %>" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteModalLabel<%= schedule.id %>">削除確認</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                  「<strong><%= schedule.title %></strong>」を削除しますか？
+                </div>
+                <div class="modal-footer">
+                  <%= button_to '削除する',
+                                schedule_path(schedule),
+                                method: :delete,
+                                class: 'btn btn-danger',
+                                form: { data: { turbo_confirm: nil } } %>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </td>
       </tr>
     <% end %>
