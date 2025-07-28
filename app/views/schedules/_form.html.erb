@@ -1,0 +1,53 @@
+<%= form_with(model: schedule, local: true) do |form| %>
+  <% if schedule.errors.any? %>
+    <div class="alert alert-danger">
+      <h4 class="alert-heading"><%= pluralize(schedule.errors.count, "件のエラー") %>があります：</h4>
+      <ul>
+        <% schedule.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :title, 'タイトル', class: 'form-label' %>
+    <%= form.text_field :title, class: 'form-control', maxlength: 20 %>
+    <% if schedule.errors[:title].present? %>
+      <div class="text-danger small"><%= schedule.errors[:title].first %></div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :start_date, '開始日', class: 'form-label' %>
+    <%= form.date_field :start_date, class: 'form-control' %>
+    <% if schedule.errors[:start_date].present? %>
+      <div class="text-danger small"><%= schedule.errors[:start_date].first %></div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :end_date, '終了日', class: 'form-label' %>
+    <%= form.date_field :end_date, class: 'form-control' %>
+    <% if schedule.errors[:end_date].present? %>
+      <div class="text-danger small"><%= schedule.errors[:end_date].first %></div>
+    <% end %>
+  </div>
+
+  <div class="form-check mb-3">
+    <%= form.check_box :all_day, class: 'form-check-input' %>
+    <%= form.label :all_day, '終日', class: 'form-check-label' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :memo, 'メモ', class: 'form-label' %>
+    <%= form.text_area :memo, class: 'form-control', rows: 4, maxlength: 500 %>
+    <% if schedule.errors[:memo].present? %>
+      <div class="text-danger small"><%= schedule.errors[:memo].first %></div>
+    <% end %>
+  </div>
+
+  <div class="text-center">
+    <%= form.submit '保存', class: 'btn btn-primary' %>
+  </div>
+<% end %>

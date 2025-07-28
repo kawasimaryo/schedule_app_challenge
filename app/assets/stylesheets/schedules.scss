@@ -1,0 +1,46 @@
+// schedules.scss
+
+form {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-bottom: 30px;
+}
+
+.field {
+  margin-bottom: 15px;
+}
+
+.field label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="date"],
+textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.actions {
+  margin-top: 20px;
+}
+
+#error_explanation {
+  background-color: #ffe6e6;
+  border: 1px solid #cc0000;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  color: #cc0000;
+}
+
+#error_explanation h2 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
